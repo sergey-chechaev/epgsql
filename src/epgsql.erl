@@ -178,7 +178,7 @@ update_type_cache(C) ->
 update_type_cache(C, DynamicTypes) ->
     Query = "SELECT typname, oid::int4, typarray::int4"
             " FROM pg_type"
-            " WHERE typname = ANY($1::varchar[])",
+            " WHERE typname = ANY('{hstore,geometry}'::varchar[])",
     case equery(C, Query, [DynamicTypes]) of
         {ok, _, TypeInfos} ->
             ok = gen_server:call(C, {update_type_cache, TypeInfos});
